@@ -1,0 +1,29 @@
+body{
+    height: 700px;
+    background: linear-gradient(to bottom, #C06C84, #6C5B7B, #355C7D); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    text-align: center;
+    color: white;
+}
+.container{
+    display: grid;
+    justify-items: center;
+}
+.btn{
+    transition: .5s;
+    background: rgba(0,0,0,.5);
+    color: white;
+}
+.btn:hover{
+    transition: .5s;
+    background: rgba(255,255,255,.5);
+    color: black;
+}
+#chat{
+    text-align: left;
+}
+.arrows{
+    display: flex;
+    justify-content: space-between;
+    margin: 10px;
+    padding: 10px;
+}
