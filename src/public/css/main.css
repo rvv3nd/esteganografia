@@ -18,8 +18,18 @@ body{
     background: rgba(255,255,255,.5);
     color: black;
 }
+
+.msg_onchat{
+    padding: 12px;
+}
+
 #chat{
     text-align: left;
+    height: 300px;
+    max-height: 300px;
+    overflow-y: auto;
+    scroll-behavior: auto;
+    background: rgba(0,0,0,.1);
 }
 .arrows{
     display: flex;
