@@ -86,14 +86,14 @@ $(function(){
     $nickForm.submit(e =>{
         e.preventDefault()
         console.log('Iniciando sesión')
-        $('#user_name').append('<p id="my_user">'+$nickName.val()+'<p>')
+        $('#user_name').append('<p id="my_user">'+'<i class="far fa-user"></i> '+$nickName.val()+'<p>')
         $('#containerWrap').css('display','block')
         $('#nickWrap').css('display','none')
     })
 
     socket.on('new message', function(text,user){
         var date = new Date()
-        $chat.append('<p class="msg_onchat">'+user+': '+text+'  at '+ date.getHours()+':'+date.getMinutes()+'</p>'+'<br>')
+        $chat.append('<p class="msg_onchat">'+user+' at '+ date.getHours()+':'+date.getMinutes()+':<br> '+text+'</p>'+'<br>')
         $(".msg_onchat").click(function(){
             var angulos = []
             for(let i=1;i<=10;i++){
