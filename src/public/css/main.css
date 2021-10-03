@@ -1,13 +1,20 @@
 body{
-    height: 700px;
+    height: 100vh;
     background: linear-gradient(to bottom, #C06C84, #6C5B7B, #355C7D); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     text-align: center;
     color: white;
 }
-.container{
-    display: grid;
-    justify-items: center;
+
+
+#containerWrap{
+    display: none;
 }
+
+#my_user{
+    padding-right: 30px;
+    padding-top: 10px;
+}
+
 .btn{
     transition: .5s;
     background: rgba(0,0,0,.5);

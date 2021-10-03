@@ -66,6 +66,9 @@ $(function(){
     const $msgForm = $('#mensaje-form')
     const $msg = $('#mensaje')
     const $chat = $('#chat')
+    
+    const $nickForm = $('#nickForm')
+    const $nickName = $('#nickName')
 
     //eventos
     $msgForm.submit( e => {
@@ -77,11 +80,20 @@ $(function(){
         }
         const txt = codifica($msg.val(),angulos) 
         $msg.val("");
-        socket.emit('send message',txt) 
+        socket.emit('send message',txt,$('#my_user').text()) 
     })
 
-    socket.on('new message', function(text){
-        $chat.append('<p class="msg_onchat">'+text+'</p>'+'<br>')
+    $nickForm.submit(e =>{
+        e.preventDefault()
+        console.log('Iniciando sesión')
+        $('#user_name').append('<p id="my_user">'+$nickName.val()+'<p>')
+        $('#containerWrap').css('display','block')
+        $('#nickWrap').css('display','none')
+    })
+
+    socket.on('new message', function(text,user){
+        var date = new Date()
+        $chat.append('<p class="msg_onchat">'+user+': '+text+'  at '+ date.getHours()+':'+date.getMinutes()+'</p>'+'<br>')
         $(".msg_onchat").click(function(){
             var angulos = []
             for(let i=1;i<=10;i++){
