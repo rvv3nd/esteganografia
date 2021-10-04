@@ -2,15 +2,17 @@
 
 body{
     height: 100vh;
-    background: linear-gradient(to bottom, #C06C84, #6C5B7B, #355C7D); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background-image: url("/img/gato.gif");
+    background-color: #6C5B7B; /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     text-align: center;
     color: white;
 }
 
+
 #nickWrap{
     border-radius: 20px;
     min-height: 200px;
-    background: rgba(255,255,255,.45);
+    background: rgba(255,255,255,.9);
 }
 
 
@@ -18,9 +20,14 @@ body{
     display: none;
 }
 
+.card-header{
+    background: rgba(0, 0, 0, .3);
+}
+
 #my_user{
     text-align: left;
     padding-left: 30px;
+    padding-top: 10px;
 }
 
 .btn{
@@ -38,19 +45,24 @@ body{
     padding: 12px;
 }
 
+#mensaje-form{
+    padding: 0;
+}
+
 #chat{
     text-align: left;
     height: 300px;
     max-height: 300px;
     overflow-y: auto;
     scroll-behavior: auto;
-    background: rgba(0,0,0,.1);
+    background: rgba(0,0,0,.6);
 }
 .arrows{
     display: flex;
     justify-content: space-between;
-    margin: 10px;
-    padding: 10px;
+    margin: 0px;
+    padding: 20px;
+    background:rgba(0, 0, 0, .3);
 }
 .navbar{
     background: rgba(0,0,0,.2);
@@ -67,7 +79,4 @@ footer{
   footer a{
       text-decoration: none;
       color: whitesmoke;
-  }
-  footer a:hover{
-    color: black;
   }
