@@ -93,7 +93,7 @@ $(function(){
 
     socket.on('new message', function(text,user){
         var date = new Date()
-        $chat.append('<p class="msg_onchat">'+user+' at '+ date.getHours()+':'+date.getMinutes()+':<br> '+text+'</p>'+'<br>')
+        $chat.append('<p class="msg_onchat"> '+user+' at '+ date.getHours()+':'+date.getMinutes()+':<br> '+text+'</p>'+'<br>')
         $(".msg_onchat").click(function(){
             var angulos = []
             for(let i=1;i<=10;i++){
