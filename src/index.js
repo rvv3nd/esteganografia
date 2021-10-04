@@ -14,6 +14,6 @@ require('./sockets')(io)
 app.use(express.static(path.join(__dirname,'public')))
 
 //empeiza a escuchar
-server.listen(PORT,()=>{
+server.listen(process.env.PORT || PORT,()=>{
     console.log(`server on port ${app.get('port')}`)
 });
