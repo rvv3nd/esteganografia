@@ -58,6 +58,8 @@ const equivalencias = {
     "45":0,"135":1,
 }
 
+const key = "zÇ{ouvw}kx" // == qwertyuiop
+
 $(function(){
     const socket = io();
     //console.log('works!')
@@ -69,7 +71,6 @@ $(function(){
     
     const $nickForm = $('#nickForm')
     const $nickName = $('#nickName')
-
     //eventos
     $msgForm.submit( e => {
         e.preventDefault()
@@ -85,10 +86,15 @@ $(function(){
 
     $nickForm.submit(e =>{
         e.preventDefault()
-        console.log('Iniciando sesión')
-        $('#user_name').append('<p id="my_user">'+'<i class="far fa-user"></i> '+$nickName.val()+'<p>')
-        $('#containerWrap').css('display','block')
-        $('#nickWrap').css('display','none')
+        if(claveValida($('#password').val())){
+            console.log('Iniciando sesión')
+            $('#user_name').append('<p id="my_user">'+'<i class="far fa-user"></i> '+$nickName.val()+'<p>')
+            $('#containerWrap').css('display','block')
+            $('#nickWrap').css('display','none')
+        }
+        else{
+            alert("Contraseña incorrecta")
+        }
     })
 
     socket.on('new message', function(text,user){
@@ -104,6 +110,10 @@ $(function(){
         $chat.scrollTop($chat.prop('scrollHeight'))
     })
 })
+
+function claveValida(attemp){
+    return (cipherPuertas(attemp) == key) ? true : false   
+}
 
 function codifica(msg, array_angulos){
     var palabras = [], res=""
@@ -178,4 +188,28 @@ function rotar(id){
     $("#"+id).css("transition",".5s")
     if(val>=180) val = 0
     $("#"+id).attr("alt",val)
+}
+
+function cipherPuertas(txt){
+    txt = sus(txt)
+    txt = per(txt)
+    txt = sus(txt)
+    txt = per(txt)
+    return txt
+}
+
+function sus(cad){
+    var res = ""
+    for(char of cad){
+        res += ascii[(ascii.indexOf(char)+3)%ascii.length]
+    }
+    return res
+}
+function per(cad){
+    var res = ""
+    var array = cad.split("")
+    for(let i=0;i<array.length;i++){
+        res += array[(i+2)%array.length]
+    }
+    return res
 }

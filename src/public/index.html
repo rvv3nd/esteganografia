@@ -26,11 +26,15 @@
         <div class="card-body">
             <form id="nickForm">
                 <div class="input-group mb-3 mt-4">
+                    <span class="input-group-text" id="addon-wrapping"><i class="fas fa-user"></i></span>
                     <input type="text" id="nickName" class="form-control" placeholder="User">
-                    <div class="input-group-append">
-                        <button class="btn btn-outline-secondary" type="submit"><i class="fas fa-sign-in-alt"></i></button>
-                    </div>
                 </div>
+                <div class="input-group flex-nowrap mb-3 mt-4">
+                    <span class="input-group-text" id="addon-wrapping"><i class="fas fa-lock"></i></span>
+                    <input type="password" id="password" class="form-control" placeholder="Contraseña">
+                </div>
+                <button class="btn btn-outline-secondary" type="submit"><i class="fas fa-sign-in-alt"></i> Ingresar </button>
+
             </form>
         </div>
 
