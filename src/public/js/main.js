@@ -112,7 +112,7 @@ $(function(){
 })
 
 function claveValida(attemp){
-    return (cipherPuertas(attemp) == key) ? true : false   
+    return (cipherCajas(attemp) == key) ? true : false   
 }
 
 function codifica(msg, array_angulos){
@@ -190,7 +190,7 @@ function rotar(id){
     $("#"+id).attr("alt",val)
 }
 
-function cipherPuertas(txt){
+function cipherCajas(txt){
     txt = sus(txt)
     txt = per(txt)
     txt = sus(txt)
