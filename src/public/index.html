@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chat cuantico</title>
+    <title>Chat esteganográfico </title>
     <link rel="icon" href="/img/icon.png">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="/socket.io/socket.io.js"></script>
@@ -16,7 +16,7 @@
 </head>
 <body>
     <nav class="navbar">
-        <a class="navbar-brand mx-auto text-white" href="/">Chat cifrado cuanticamente 🤯</a>
+        <a class="navbar-brand mx-auto text-white" href="/">Chat esteganográfico</a>
     </nav>
 
     <div class="card col-md-4 mt-5 mx-auto" id="nickWrap">
@@ -41,21 +41,15 @@
     </div>
 
     <div class="container" id="containerWrap">
-        <div class="col-md-6 mt-4 mx-auto">
+        <div class="col-md-8 mt-4 mx-auto">
             <div class="card-header">
                 <div id="user_name"></div>
             </div>
             <div id="chat" class="car-body">
             </div>
             <form id="mensaje-form" class="card-footer">
-                <nav class="arrows">
-                    <img id="arrow_1" src="/img/flecha.png" onclick="rotar(id)" alt="0"><img id="arrow_2" src="/img/flecha.png" onclick="rotar(id)" alt="0">
-                    <img id="arrow_3" src="/img/flecha.png" onclick="rotar(id)" alt="0"><img id="arrow_4" src="/img/flecha.png" onclick="rotar(id)" alt="0">
-                    <img id="arrow_5" src="/img/flecha.png" onclick="rotar(id)" alt="0"><img id="arrow_6" src="/img/flecha.png" onclick="rotar(id)" alt="0">
-                    <img id="arrow_7" src="/img/flecha.png" onclick="rotar(id)" alt="0"><img id="arrow_8" src="/img/flecha.png" onclick="rotar(id)" alt="0">
-                    <img id="arrow_9" src="/img/flecha.png" onclick="rotar(id)" alt="0"><img id="arrow_10" src="/img/flecha.png" onclick="rotar(id)" alt="0">
-                </nav>
-                <div class="input-group mb-3">
+                <div class="input-group">
+                    <input type="file" accept=".png, .jpg, .bmp, .jpeg" class="form-control-file" id="image_to_use">
                     <input id="mensaje" type="text" class="form-control" placeholder="Mensaje">
                     <button class="btn" type="submit" id="button-enviar"><i class="fas fa-paper-plane"></i></button>
                 </div>
@@ -63,7 +57,6 @@
         </div>
     </div>
     <footer>
-        
         <div>
             <a class="text-white" href="https://github.com/rvv3nd/quantum_cipher/blob/main/src/public/js/main.js"><img src="/img/icon-github.png"/></a>
         </div>

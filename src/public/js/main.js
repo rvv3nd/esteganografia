@@ -1,3 +1,4 @@
+
 const ascii = [
     "␀","␁","␂", "␃","␄",
     "␅","␆", "␇", "␈", "␉",
@@ -53,12 +54,7 @@ const ascii = [
     "¹",  "³",   "²",   "■",  " "
   ]
 
-const equivalencias = {
-    "0":0, "90":1, "180":0, //0 es igual a 180
-    "45":0,"135":1,
-}
-
-const key = "zÇ{ouvw}kx" // == qwertyuiop
+// const key = "zÇ{ouvw}kx" // == qwertyuiop
 
 $(function(){
     const socket = io();
@@ -68,20 +64,46 @@ $(function(){
     const $msgForm = $('#mensaje-form')
     const $msg = $('#mensaje')
     const $chat = $('#chat')
-    
     const $nickForm = $('#nickForm')
     const $nickName = $('#nickName')
     //eventos
     $msgForm.submit( e => {
         e.preventDefault()
         console.log('sending data')
-        var angulos = []
-        for(let i=1;i<=10;i++){
-            angulos.push($('#arrow_'+i).attr("alt"))
-        }
-        const txt = codifica($msg.val(),angulos) 
-        $msg.val("");
-        socket.emit('send message',txt,$('#my_user').text()) 
+        const img_file = document.getElementById("image_to_use").files[0];
+        console.log(`file: ${img_file.name} size: ${img_file.size}`)
+        var img = document.createElement('img')
+        img.src = URL.createObjectURL(img_file)
+        img.onload = function(){
+            var canvas = document.createElement('canvas');
+            var context = canvas.getContext('2d');
+            canvas.height = img.naturalHeight;
+            canvas.width = img.naturalWidth;
+            context.drawImage(img, 0, 0, img.naturalWidth, img.naturalHeight);
+            var imageData = context.getImageData(0,0,img.naturalWidth,img.naturalHeight)
+            var pixeles = imageData.data
+            console.log(pixeles)
+            var newcanvas = document.createElement('canvas');
+            var ctx = newcanvas.getContext('2d');
+            newcanvas.width = img.naturalWidth
+            newcanvas.height = img.naturalHeight
+            // console.log($('#mensaje').val())
+            var newImageData = new ImageData(codifica(pixeles,$('#mensaje').val()),img.naturalWidth,img.naturalHeight)
+            ctx.putImageData(newImageData,0,0)
+            var newpixeles = newImageData.data
+            console.log(newpixeles)
+            let l = $('#mensaje').val().length
+            $chat.append(newcanvas)
+            var date = new Date()
+            $chat.append('<p class="msg_onchat">'+$('#user_name').val()+' at '+ date.getHours()+':'+date.getMinutes()+'<br><br>')
+            socket.emit('send message') 
+            $(".msg_onchat").click(function(){
+                alert(decodifica(newpixeles,l))
+            })
+        }   
+
+
+        // const bytesResultado = codifica($msg.val(),/*Aqui entra la imagen*/) 
     })
 
     $nickForm.submit(e =>{
@@ -97,79 +119,43 @@ $(function(){
         }
     })
 
-    socket.on('new message', function(text,user){
-        var date = new Date()
-        $chat.append('<p class="msg_onchat">'+user+' at '+ date.getHours()+':'+date.getMinutes()+':<br> '+text+'</p>'+'<br>')
-        $(".msg_onchat").click(function(){
-            var angulos = []
-            for(let i=1;i<=10;i++){
-                angulos.push($('#arrow_'+i).attr("alt"))
-            }
-            alert(decodifica(text,angulos))
-        })
+    socket.on('new message', function(){
+        $msg.val("");
         $chat.scrollTop($chat.prop('scrollHeight'))
     })
 })
 
 function claveValida(attemp){
-    return (cipherCajas(attemp) == key) ? true : false   
+    return true
+    // return (cipherCajas(attemp) == key) ? true : false   
 }
 
-function codifica(msg, array_angulos){
-    var palabras = [], res=""
-    
-    /*
-        De cada letra del mensaje 
-        obtiene los n bits correspondientes segun el ascii
-        cada bit se almacena en un array que se va 
-        en otro array de todas las letras
-    */
-    for(letra of msg){
-        const letra_on_binary = ascii.indexOf(letra).toString(2) 
-        palabras.push(letra_on_binary.split(""))  
+function codifica(array,msg){
+    //[rojo, verde, azul, y alfa]
+    let i = 0
+    let j = 3
+    // console.log(msg.length)
+    while (i<msg.length){
+        // console.log(`${array[j]} por ${ascii.indexOf(msg[i])}`)
+        array[j] = ascii.indexOf(msg[i])
+        j += 4
+        i++
     }
-    // for(element of array_angulos){
-    //     console.log(element)
-    // }
-    // for(element of palabras){
-    //     console.log(element)
-    // }
-
-    /*
-    Se recorre la matriz multiplicando bit por bit
-    con las posiciones elegidas en las flechitas
-    */
-
-    for(word of palabras){
-        var letra_codificada = "", i = 0
-        for(element of word){
-            //console.log(`${element}^${equivalencias[array_angulos[i]]} = ${element ^ equivalencias[array_angulos[i]]}`)
-            letra_codificada += element ^ equivalencias[array_angulos[i++]] //cada elemento en binario se multiplica por el equivalente en binario del angulo
-        }
-        //console.log(`${letra_codificada} = ${binarioADecimal(letra_codificada)}`)
-        res += ascii[binarioADecimal(letra_codificada)]
-    }  
-
-    return res 
+    return array
 }
 
-function decodifica(text,array_angulos){
-    var text_deco = "", code_words = []
-
-    for(letra of text){
-        const letra_on_binary = ascii.indexOf(letra).toString(2) 
-        code_words.push(letra_on_binary.split(""))  
+function decodifica(pixeles,l){   
+    text = ""
+    let i = 0
+    let j = 3
+    console.log(typeof(pixeles))
+    while(i<l){
+        console.log(`${pixeles[j]} por ${ascii[pixeles[j]]}`)
+        text += ascii[pixeles[j]]
+        j += 4
+        i++
     }
-
-    for(word of code_words){
-        var letra_decodificada = "", i = 0
-        for(element of word){
-            letra_decodificada += element ^ equivalencias[array_angulos[i++]] //cada elemento en binario se multiplica por el equivalente en binario del angulo
-        }
-        text_deco += ascii[binarioADecimal(letra_decodificada)]
-    }
-
-    return text_deco
+    return text
 }
 
 //funciones auxiliares 
@@ -180,36 +166,4 @@ function binarioADecimal(num) {
        sum += +num[i] * 2 ** (num.length - 1 - i);
     }
     return sum;
-}
-function rotar(id){
-    var val = Number($("#"+id).attr("alt")) + 45
-    console.log(val)
-    $("#"+id).css("transform",'rotate('+(val)+'deg)')
-    $("#"+id).css("transition",".5s")
-    if(val>=180) val = 0
-    $("#"+id).attr("alt",val)
-}
-
-function cipherCajas(txt){
-    txt = sus(txt)
-    txt = per(txt)
-    txt = sus(txt)
-    txt = per(txt)
-    return txt
-}
-
-function sus(cad){
-    var res = ""
-    for(char of cad){
-        res += ascii[(ascii.indexOf(char)+3)%ascii.length]
-    }
-    return res
-}
-function per(cad){
-    var res = ""
-    var array = cad.split("")
-    for(let i=0;i<array.length;i++){
-        res += array[(i+2)%array.length]
-    }
-    return res
 }

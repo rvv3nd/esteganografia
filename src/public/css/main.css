@@ -2,8 +2,6 @@
 
 body{
     height: 100vh;
-    background-image: url("/img/gato-small.gif");
-    background-repeat: no-repeat;
     background-position: 50% 40% ;
     background-color: #6C5B7B; /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     text-align: center;
@@ -22,10 +20,17 @@ body{
 
 #containerWrap{
     display: none;
+    height: 700px;
 }
 
 .card-header{
     background: rgba(0, 0, 0, .3);
+}
+.card-footer{
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-items: center;
 }
 
 #my_user{
@@ -45,6 +50,7 @@ body{
     color: black;
 }
 
+
 .msg_onchat{
     padding: 12px;
 }
@@ -52,22 +58,18 @@ body{
 #mensaje-form{
     padding: 0;
 }
+#mensaje{
+    display: inline;
+}
 
 #chat{
     text-align: left;
-    height: 300px;
-    max-height: 300px;
+    height: 500px;
     overflow-y: auto;
     scroll-behavior: auto;
     background: rgba(0,0,0,.6);
 }
-.arrows{
-    display: flex;
-    justify-content: space-between;
-    margin: 0px;
-    padding: 20px;
-    background:rgba(0, 0, 0, .3);
-}
+
 .navbar{
     background: rgba(0,0,0,.2);
 }
