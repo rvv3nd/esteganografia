@@ -1,6 +1,5 @@
-# Not an actual QUANTUM cipher
+# Sistema de esteganografia con JS
 
-### It uses bit stuffing theory mixed with the quantum theory of superposition. Every 7-bits set is opereted with XOR to get a new character ciphered. 
-### All this is represented in a real time chat.
+### Envia mensajes ocultos en una imagen de tu eleccion
 
 #### Live version [here](https://quantum-cipher.herokuapp.com/)
